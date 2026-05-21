@@ -1,43 +1,46 @@
 import api from "./api";
 import { User, LoginRequest, RegisterRequest } from "@/types";
 
+type AuthResponse = {
+  token: string;
+  email: string;
+  fullName: string;
+  userId: string;
+};
+
+function toUser(data: AuthResponse): User {
+  return {
+    token: data.token,
+    email: data.email,
+    fullName: data.fullName,
+    userId: data.userId,
+  };
+}
+
+function persist(user: User): void {
+  localStorage.setItem("token", user.token);
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
 export const authService = {
   async login(credentials: LoginRequest): Promise<User> {
-    const response = await api.post("/auth/login", credentials);
-    const data = response.data;
-
-    if (!data.token && !data.Token) {
-      throw new Error("Token no recibido del servidor");
-    }
-
-    const user: User = {
-      token: data.token || data.Token,
-      email: data.email || data.Email,
-      fullName: data.fullName || data.FullName,
-      userId: data.userId || data.UserId,
-    };
-
-    // Guardar token
-    localStorage.setItem("token", user.token);
-    // Guardar user
-    localStorage.setItem("user", JSON.stringify(user));
-
+    const { data } = await api.post<AuthResponse>("/auth/login", credentials);
+    const user = toUser(data);
+    persist(user);
     return user;
   },
 
   async register(userData: RegisterRequest): Promise<User> {
-    const response = await api.post("/auth/register", userData);
-    const data = response.data;
+    const { data } = await api.post<AuthResponse>("/auth/register", userData);
+    const user = toUser(data);
+    persist(user);
+    return user;
+  },
 
-    const user: User = {
-      token: data.token || data.Token,
-      email: data.email || data.Email,
-      fullName: data.fullName || data.FullName,
-      userId: data.userId || data.UserId,
-    };
-
-    localStorage.setItem("token", user.token);
-    localStorage.setItem("user", JSON.stringify(user));
+  async googleLogin(idToken: string): Promise<User> {
+    const { data } = await api.post<AuthResponse>("/auth/google", { idToken });
+    const user = toUser(data);
+    persist(user);
     return user;
   },
 

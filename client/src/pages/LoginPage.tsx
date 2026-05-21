@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import { useAuth } from "@/contexts/AuthContext";
 import { Input } from "@components/common/Input";
 import { Button } from "@components/common/Button";
@@ -11,7 +12,7 @@ export const Login: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login, isAuthenticated } = useAuth();
+  const { login, googleLogin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +25,6 @@ export const Login: React.FC = () => {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       await login({ email, password });
     } catch (err: any) {
@@ -34,10 +34,27 @@ export const Login: React.FC = () => {
     }
   };
 
+  const handleGoogleSuccess = async (response: CredentialResponse) => {
+    if (!response.credential) {
+      setError("No se recibió credencial de Google.");
+      return;
+    }
+    setError("");
+    try {
+      await googleLogin(response.credential);
+    } catch (err: any) {
+      setError(err.response?.data?.error || "Error al iniciar sesión con Google");
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError("Error al conectar con Google. Intentá de nuevo.");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        {/* Logo y Header */}
+        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="bg-blue-600 p-3 rounded-2xl">
@@ -45,20 +62,37 @@ export const Login: React.FC = () => {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">TaskApp</h1>
-          <p className="text-gray-600">
-            Inicia sesión para gestionar tus tareas
-          </p>
+          <p className="text-gray-600">Inicia sesión para gestionar tus tareas</p>
         </div>
 
-        {/* Formulario */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
 
+          {/* Google Login */}
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              width="368"
+              text="continue_with"
+              shape="rectangular"
+              logo_alignment="left"
+            />
+          </div>
+
+          {/* Divider */}
+          <div className="my-6 flex items-center gap-3">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-sm text-gray-400">o con tu cuenta</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+
+          {/* Email / Password */}
+          <form onSubmit={handleSubmit} className="space-y-6">
             <Input
               type="email"
               label="Correo Electrónico"
@@ -89,22 +123,6 @@ export const Login: React.FC = () => {
             </Button>
           </form>
 
-          {/* Credenciales de prueba */}
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-sm font-semibold text-blue-900 mb-2">
-              🧪 Credenciales de prueba:
-            </p>
-            <div className="text-sm text-blue-700 space-y-1">
-              <p>
-                <strong>Email:</strong> admin@taskapp.com
-              </p>
-              <p>
-                <strong>Password:</strong> Admin123!
-              </p>
-            </div>
-          </div>
-
-          {/* Link a Registro */}
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               ¿No tienes cuenta?{" "}

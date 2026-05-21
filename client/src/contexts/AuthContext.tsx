@@ -7,6 +7,7 @@ interface AuthContextType {
   loading: boolean;
   login: (credentials: LoginRequest) => Promise<void>;
   register: (userData: RegisterRequest) => Promise<void>;
+  googleLogin: (idToken: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -35,6 +36,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(registeredUser);
   };
 
+  const googleLogin = async (idToken: string) => {
+    const loggedUser = await authService.googleLogin(idToken);
+    setUser(loggedUser);
+  };
+
   const logout = () => {
     authService.logout();
     setUser(null);
@@ -47,6 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         loading,
         login,
         register,
+        googleLogin,
         logout,
         isAuthenticated: !!user,
       }}
