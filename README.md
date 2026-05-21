@@ -2,11 +2,6 @@
 
 > A full-stack task management system built with production-grade architecture — Clean Architecture on the backend, React 19 on the frontend, serverless on Azure.
 
-[![API CI](https://github.com/addington-ramsey/task-app/actions/workflows/api.yml/badge.svg)](https://github.com/addington-ramsey/task-app/actions/workflows/api.yml)
-[![Client CI](https://github.com/addington-ramsey/task-app/actions/workflows/client.yml/badge.svg)](https://github.com/addington-ramsey/task-app/actions/workflows/client.yml)
-
----
-
 ## What is this?
 
 A real-world task management app — not a tutorial, not a toy. Built to demonstrate how a production system is actually structured: layered architecture, explicit failure handling, auth that works end-to-end, and a CI pipeline that runs on every push.
