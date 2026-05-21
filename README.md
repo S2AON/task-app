@@ -2,7 +2,7 @@
 
 > Full-Stack Task Management Application — Technical Assessment for Senior Software Engineer Position
 
-A production-ready task management web application built with **React 19**, **Azure Functions (C# .NET 10)**, **Entity Framework Core**, and **Swagger/OpenAPI** documentation. Features JWT + Google OAuth authentication, advanced filtering, real-time polling, Clean Architecture, and Factory Pattern.
+A production-ready task management web application built with **React 19**, **Azure Functions (C# .NET 8)**, **Entity Framework Core**, and **Swagger/OpenAPI** documentation. Features JWT + Google OAuth authentication, advanced filtering, real-time polling, Clean Architecture, and Factory Pattern.
 
 ---
 
@@ -141,7 +141,7 @@ Clean Architecture with strict dependency rules — outer layers depend on inner
 
 ## Prerequisites
 
-- .NET 10 SDK
+- .NET 8 SDK
 - Node.js 20+ and pnpm
 - Azure Functions Core Tools v4
 
