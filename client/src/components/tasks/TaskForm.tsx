@@ -101,7 +101,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">
           Descripción
         </label>
         <textarea
@@ -111,14 +111,15 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           }
           rows={4}
           className={`
-            block w-full rounded-lg border border-gray-300 px-4 py-2
-            focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            ${errors.description ? "border-red-500" : ""}
+            block w-full rounded-lg border bg-white text-slate-900 placeholder:text-slate-400
+            px-4 py-2.5 text-sm outline-none transition-all duration-150 resize-none
+            focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+            ${errors.description ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-slate-300"}
           `}
           placeholder="Describe la tarea en detalle..."
         />
         {errors.description && (
-          <p className="mt-1 text-sm text-red-600">{errors.description}</p>
+          <p className="mt-1.5 text-xs text-red-600 font-medium">{errors.description}</p>
         )}
       </div>
 
@@ -133,7 +134,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 
       {task && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">
             Estado
           </label>
           <select
@@ -144,7 +145,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                 status: parseInt(e.target.value) as TaskStatus,
               })
             }
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="block w-full rounded-lg border border-slate-300 bg-white text-slate-900 px-4 py-2.5 text-sm outline-none transition-all duration-150 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
           >
             <option value={TaskStatus.Pending}>Pendiente</option>
             <option value={TaskStatus.InProgress}>En Progreso</option>

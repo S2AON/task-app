@@ -18,13 +18,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   const getStatusColor = (status: TaskStatus) => {
     switch (status) {
       case TaskStatus.Pending:
-        return "bg-yellow-100 text-yellow-800 border-yellow-300";
+        return "bg-amber-50 text-amber-700 ring-1 ring-amber-200";
       case TaskStatus.InProgress:
-        return "bg-blue-100 text-blue-800 border-blue-300";
+        return "bg-blue-50 text-blue-700 ring-1 ring-blue-200";
       case TaskStatus.Done:
-        return "bg-green-100 text-green-800 border-green-300";
+        return "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-300";
+        return "bg-slate-100 text-slate-600 ring-1 ring-slate-200";
     }
   };
 
@@ -58,42 +58,40 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-all border border-gray-200">
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="text-xl font-semibold text-gray-900 flex-1">
+    <div className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+      <div className="flex justify-between items-start gap-3 mb-3">
+        <h3 className="text-base font-semibold text-slate-900 leading-snug flex-1">
           {task.Title}
         </h3>
         <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(
-            task.Status
-          )}`}
+          className={`shrink-0 px-2.5 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(task.Status)}`}
         >
           {getStatusText(task.Status)}
         </span>
       </div>
 
-      <p className="text-gray-600 mb-4 line-clamp-2">{task.Description}</p>
+      <p className="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">{task.Description}</p>
 
-      <div className="space-y-2 text-sm text-gray-500 mb-4">
-        <div className="flex items-center space-x-2">
-          <Calendar className="h-4 w-4 text-blue-500" />
+      <div className="space-y-1.5 text-xs text-slate-500 mb-4">
+        <div className="flex items-center gap-1.5">
+          <Calendar className="h-3.5 w-3.5 text-blue-500 shrink-0" />
           <span>Vence: {formatDate(task.DueDate, "PPP")}</span>
         </div>
 
         {task.AssignedToName && (
-          <div className="flex items-center space-x-2">
-            <User className="h-4 w-4 text-green-500" />
+          <div className="flex items-center gap-1.5">
+            <User className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
             <span>Asignado a: {task.AssignedToName}</span>
           </div>
         )}
 
-        <div className="flex items-center space-x-2">
-          <Clock className="h-4 w-4 text-gray-400" />
+        <div className="flex items-center gap-1.5">
+          <Clock className="h-3.5 w-3.5 text-slate-400 shrink-0" />
           <span>Creado: {formatDate(task.CreatedAt, "PPp")}</span>
         </div>
       </div>
 
-      <div className="flex space-x-2 pt-4 border-t">
+      <div className="flex gap-2 pt-3 border-t border-slate-100">
         <Button
           variant="primary"
           icon={Edit}

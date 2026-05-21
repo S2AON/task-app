@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,6 +11,24 @@ export const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [googleWidth, setGoogleWidth] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      if (cardRef.current) {
+        const style = window.getComputedStyle(cardRef.current);
+        const innerWidth =
+          cardRef.current.clientWidth -
+          parseFloat(style.paddingLeft) -
+          parseFloat(style.paddingRight);
+        setGoogleWidth(Math.floor(innerWidth));
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   const { login, googleLogin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -61,11 +79,11 @@ export const Login: React.FC = () => {
               <CheckSquare className="h-12 w-12 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">TaskApp</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Task App</h1>
           <p className="text-gray-600">Inicia sesión para gestionar tus tareas</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div ref={cardRef} className="bg-white rounded-2xl shadow-xl p-8">
           {error && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
               {error}
@@ -73,16 +91,16 @@ export const Login: React.FC = () => {
           )}
 
           {/* Google Login */}
-          <div className="flex justify-center">
+          {googleWidth > 0 && (
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}
-              width="368"
+              width={googleWidth}
               text="continue_with"
               shape="rectangular"
               logo_alignment="left"
             />
-          </div>
+          )}
 
           {/* Divider */}
           <div className="my-6 flex items-center gap-3">
@@ -117,7 +135,7 @@ export const Login: React.FC = () => {
               type="submit"
               variant="primary"
               loading={loading}
-              className="w-[92%]"
+              className="w-full"
             >
               Iniciar Sesión
             </Button>

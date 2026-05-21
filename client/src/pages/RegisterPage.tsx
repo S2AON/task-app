@@ -133,7 +133,7 @@ export const Register: React.FC = () => {
               type="submit"
               variant="primary"
               loading={loading}
-              className="w-[92%]"
+              className="w-full"
             >
               Crear Cuenta
             </Button>

@@ -90,8 +90,8 @@ export const Dashboard: React.FC = () => {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Mis Tareas</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-2xl font-bold text-slate-900">Mis Tareas</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
               {filteredTasks.length}{" "}
               {filteredTasks.length === 1 ? "tarea" : "tareas"}
               {searchTerm || statusFilter !== "all" ? " encontradas" : " en total"}
@@ -103,8 +103,8 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-            <AlertCircle className="h-5 w-5" />
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-2 text-sm">
+            <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
@@ -117,15 +117,17 @@ export const Dashboard: React.FC = () => {
         />
 
         {filteredTasks.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-              <AlertCircle className="h-8 w-8 text-gray-400" />
+          <div className="text-center py-16">
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-slate-100 rounded-2xl mb-4">
+              <AlertCircle className="h-7 w-7 text-slate-400" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No hay tareas</h3>
-            <p className="text-gray-600 mb-4">
+            <h3 className="text-base font-semibold text-slate-900 mb-1">
+              {searchTerm || statusFilter !== "all" ? "Sin resultados" : "Sin tareas aún"}
+            </h3>
+            <p className="text-sm text-slate-500 mb-5">
               {searchTerm || statusFilter !== "all"
-                ? "No se encontraron tareas con los filtros aplicados"
-                : "Comienza creando tu primera tarea"}
+                ? "Ninguna tarea coincide con los filtros aplicados"
+                : "Creá tu primera tarea y empezá a organizar tu trabajo"}
             </p>
             {!searchTerm && statusFilter === "all" && (
               <Button variant="primary" icon={Plus} onClick={handleNewTask}>

@@ -2,18 +2,18 @@ import api from "./api";
 import { User, LoginRequest, RegisterRequest } from "@/types";
 
 type AuthResponse = {
-  token: string;
-  email: string;
-  fullName: string;
-  userId: string;
+  Token: string;
+  Email: string;
+  FullName: string;
+  UserId: string;
 };
 
 function toUser(data: AuthResponse): User {
   return {
-    token: data.token,
-    email: data.email,
-    fullName: data.fullName,
-    userId: data.userId,
+    token: data.Token,
+    email: data.Email,
+    fullName: data.FullName,
+    userId: data.UserId,
   };
 }
 

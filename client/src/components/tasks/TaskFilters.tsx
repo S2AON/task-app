@@ -17,8 +17,8 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
   onStatusChange,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-      <div className="flex flex-col md:flex-row gap-4">
+    <div className="bg-white rounded-xl border border-slate-200 p-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
           <Input
             type="text"
@@ -29,15 +29,16 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
           />
         </div>
 
-        <div className="md:w-64">
+        <div className="sm:w-56">
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
             <select
               value={statusFilter}
-              onChange={(e) =>
-                onStatusChange(e.target.value as TaskStatus | "all")
-              }
-              className="block w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onChange={(e) => {
+                const val = e.target.value;
+                onStatusChange(val === "all" ? "all" : (Number(val) as TaskStatus));
+              }}
+              className="block w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-slate-300 bg-white text-slate-900 outline-none transition-all duration-150 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
             >
               <option value="all">Todos los estados</option>
               <option value={TaskStatus.Pending}>Pendiente</option>
