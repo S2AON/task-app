@@ -1,0 +1,35 @@
+name: API CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "api/**"
+      - "tests/**"
+      - ".github/workflows/api.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "api/**"
+      - "tests/**"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        run: dotnet restore api/TaskApp.sln
+
+      - name: Build
+        run: dotnet build api/TaskApp.sln --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test api/TaskApp.sln --no-build --configuration Release --verbosity normal
