@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using TaskApp.Domain.Common;
 
 namespace TaskApp.Domain.Entities;
 
+[Table("User",  Schema = "Auth")]
 public class User : BaseEntity
 {
     public string Email { get; set; } = string.Empty;

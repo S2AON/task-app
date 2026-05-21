@@ -3,12 +3,13 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "JWT_SECRET": "<PUT_YOUR_JWT_SECRET_HERE_MIN_32_CHARS>",
-    "JWT_ISSUER": "TaskApp",
-    "SqlConnectionString": "<YOUR_PROD_OR_DEV_SQL_CONNECTION_STRING>",
-    "GoogleAuth": {
-      "ClientId": "<YOUR_GOOGLE_CLIENT_ID>"
-    }
+    "JwtSettings:Issuer": "TaskApp",
+    "JwtSettings:Secret": "<YOUR_PROD_OR_DEV_SECRET>",
+    "GoogleAuth:ClientId": "<YOUR_GOOGLE_CLIENT_ID>",
+    "GoogleAuth:Secret": "<YOUR_GOOGLE_CLIENT_SECRET>"
+  },
+  "StringConnections": {
+    "DefaultConnection": "<YOUR_PROD_OR_DEV_SQL_CONNECTION_STRING>"
   },
   "Host": {
     "CORS": "http://localhost:3000,http://localhost:5173",

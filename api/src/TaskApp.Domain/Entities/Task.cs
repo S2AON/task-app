@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using TaskApp.Domain.Common;
 using TaskStatus = TaskApp.Domain.Enums.TaskStatus;
 
 namespace TaskApp.Domain.Entities;
 
+[Table("Task",  Schema = "Core")]
 public class Task: BaseEntity
 {
     public string Title { get; set; } = string.Empty;
