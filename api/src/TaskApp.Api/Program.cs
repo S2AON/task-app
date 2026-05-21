@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,11 +16,6 @@ var host = new HostBuilder()
     .ConfigureAppConfiguration(config => { config.AddEnvironmentVariables(); })
     .ConfigureServices((context, services) =>
     {
-        services.ConfigureHttpJsonOptions(options =>
-        {
-            options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            options.SerializerOptions.PropertyNameCaseInsensitive = true;
-        });
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
 
