@@ -51,4 +51,5 @@ body {
 /* Remove conflicting button styles */
 button {
   all: unset;
+  box-sizing: border-box;
 }
